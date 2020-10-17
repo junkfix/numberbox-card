@@ -2,7 +2,7 @@
 
 NumberBox for input sliders
 
-Inspired from simple thermostat
+Inspired from [simple thermostat](https://github.com/nervetattoo/simple-thermostat)
 
 ## Installation
 
