@@ -1,5 +1,5 @@
 ((LitElement) => {
-    console.info('NUMBERBOX_CARD 1.2');
+	console.info('NUMBERBOX_CARD 1.3');
 	const html = LitElement.prototype.html;
 	const css = LitElement.prototype.css;
 	class NumberBox extends LitElement {
@@ -104,13 +104,13 @@
 					<div class="main">
 						<div class="cur-box">
 						<ha-icon-button class="nopad" icon="mdi:plus"
-							@click="${() => this.setNumb(true)}">
+							@click="${() => this.setNumb('increment')}">
 						</ha-icon-button>
 						<div class="cur-num-box" @click="${() => this.moreInfo('hass-more-info')}" >
 							<h3 class="cur-num" > ${this.niceNum()} </h3>
 						</div>
 						<ha-icon-button class="nopad" icon="mdi:minus"
-							@click="${() => this.setNumb(false)}">
+							@click="${() => this.setNumb('decrement')}">
 						</ha-icon-button>
 						</div>
 					</div>
@@ -122,7 +122,8 @@
 
 		setConfig(config) {
 			if (!config.entity) throw new Error('Please define an entity.');
-			if (config.entity.split('.')[0] !== 'input_number') throw new Error('Please define a input_number entity.');
+			if (config.entity.split('.')[0] !== 'input_number')
+				{throw new Error('Please define a input_number entity.');}
 			this.config = {
 				name: config.name,
 				entity: config.entity,
@@ -142,46 +143,25 @@
 			const [domain, name] = service.split('.');
 			this._hass.callService(domain, name, data);
 		}
-		
-		publishNum(val){
-			this._hass.callService("input_number", "set_value", { entity_id: this.stateObj.entity_id, value: val });
+		setNumb(v){
+			this._hass.callService("input_number", v, { entity_id: this.stateObj.entity_id });
 		}
 		
-		setNumb(addd){
-			const minn=Number(this.stateObj.attributes.min);
-			const maxx=Number(this.stateObj.attributes.max);
-			const step=Number(this.stateObj.attributes.step);
-			const curr=Number(this.stateObj.state);
-			if(addd){
-				const adval=(curr + step);
-				if( adval <=  maxx){
-					this.publishNum(adval);
-				}
-			}else{
-				const adval=(curr - step);
-				if( adval >= minn){
-					this.publishNum(adval);
-				}				
-			}
-		}
-		
-		niceNum(){
+		niceNum(fix){
 			const stp=Number(this.stateObj.attributes.step);
-			if( Math.round(stp) != stp ){
-				return Number(this.stateObj.state).toFixed(1);
-			}else{
-				return Number(this.stateObj.state).toFixed(0);
-			}
+			if( Math.round(stp) != stp ){ fix=1;}else{ fix=0;}
+			return Number(this.stateObj.state).toFixed(fix);
 		}
 
 		moreInfo(type, options = {}) {
-			const event = new Event(type, {
+			const e = new Event(type, {
 				bubbles: options.bubbles || true,
 				cancelable: options.cancelable || true,
 				composed: options.composed || true,
 			});
-			event.detail = {entityId: this.stateObj.entity_id};
-			this.dispatchEvent(event);
+			e.detail = {entityId: this.stateObj.entity_id};
+			this.dispatchEvent(e);
+			return e;
 		}
 
 	}
