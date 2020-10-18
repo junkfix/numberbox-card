@@ -35,6 +35,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | entity | string | **Required** | `input_number.my_slider`
 | name | string/bool | `friendly_name` | Override friendly name (set to `false` to hide)
 | icon | string/bool | `icon` | Override icon (set to `false` to hide)
+| border | bool | `true` | set to `false` to hide borders
 
 ## Examples
 
@@ -51,5 +52,6 @@ Basic configuration:
   entity: input_number.my_slider
   name: My Title
   icon: 'mdi:fire'
+  border: false
 ```
 
