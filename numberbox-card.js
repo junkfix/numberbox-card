@@ -28,8 +28,8 @@
 			.cur-box{display:flex;align-items:center;justify-content:center;flex-direction:row-reverse}
 			.cur-num-box{display:flex;align-items:center}
 			.cur-num{
-				font-size:var(--st-font-size-xl, var(--paper-font-display1_-_font-size));
-				line-height:var(--st-font-size-xl, var(--paper-font-display1_-_font-size));
+				font-size:var(--paper-font-subhead_-_font-size);
+				line-height:var(--paper-font-subhead_-_line-height);
 				font-weight:normal;margin:0}
 			.nopad{padding:0px}
 			.grid {
@@ -39,7 +39,6 @@
 			}
 			.grid-content {
 			  display: grid;
-			  align-content: space-between;
 			  grid-row-gap: 6px;
 			}
 			.grid-left {
@@ -48,6 +47,7 @@
 			  padding: 16px 0 16px 16px;
 			  cursor: pointer;
 			}
+			.grid-right .body{margin-left:auto}
 			.grid-right {
 			  text-align: right;
 			  padding-right: 10px;
