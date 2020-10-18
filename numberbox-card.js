@@ -1,5 +1,5 @@
 ((LitElement) => {
-    console.info('NUMBERBOX_CARD 1.1');
+    console.info('NUMBERBOX_CARD 1.2');
 	const html = LitElement.prototype.html;
 	const css = LitElement.prototype.css;
 	class NumberBox extends LitElement {
@@ -20,6 +20,8 @@
 				font-weight:var(--paper-font-body1_-_font-weight);
 				line-height:var(--paper-font-body1_-_line-height);
 				padding:calc(var(--st-spacing, var(--st-default-spacing)) * 4) 0}
+			ha-card.noborder{padding:0 !important;margin:0 !important;
+				box-shadow:none !important;border:none !important}
 			.body{
 				display:grid;grid-auto-flow:column;grid-auto-columns:1fr;
 				place-items:center;padding:0 calc(var(--st-spacing, var(--st-default-spacing)) * 4);
@@ -35,29 +37,35 @@
 			.grid {
 			  display: grid;
 			  grid-template-columns: repeat(2, auto);
-			  cursor: pointer;
 			}
 			.grid-content {
 			  display: grid;
-			  grid-row-gap: 6px;
 			}
 			.grid-left {
 			  text-align: left;
 			  font-size: var(--paper-font-body1_-_font-size);
 			  padding: 16px 0 16px 16px;
 			  cursor: pointer;
+			  text-overflow: ellipsis;
+			  word-break: keep-all;
+			  white-space: nowrap
 			}
+			.noborder .grid-left{padding-left:8px !important}
 			.grid-right .body{margin-left:auto}
 			.grid-right {
 			  text-align: right;
 			  padding-right: 10px;
 			}
+			.noborder .grid-right{padding-right:0 !important}
 			`;
 		}
 
 		render() {
 			if(!this.stateObj){return html`<ha-card>Missing:'${this.config.entity}'</ha-card>`;}
 			const vars={};
+			if( this.config.border === undefined || this.config.border){
+				vars['border']='';
+			}else{vars['border']='noborder';}
 			if( this.config.icon === undefined && this.stateObj.attributes.icon ){
 				vars['icon']=this.stateObj.attributes.icon;
 			}else{
@@ -80,11 +88,11 @@
 		}
 		renderMain(vars) {
 			return html`
-			<ha-card>
+			<ha-card class="${vars.border}">
 				${vars.icon ? html`<div class="grid">
 				<div class="grid-content grid-left" @click="${() => this.moreInfo('hass-more-info')}">
 					<div>
-					<ha-icon icon="${vars.icon}" style="margin-right:10px;color:var(--paper-item-icon-color);"></ha-icon>
+					<ha-icon icon="${vars.icon}" style="margin-right:20px;color:var(--paper-item-icon-color);"></ha-icon>
 					${vars.name}
 					</div>
 				</div><div class="grid-content grid-right">${this.renderNum()}</div></div>` : this.renderNum() }
@@ -119,6 +127,7 @@
 				name: config.name,
 				entity: config.entity,
 				icon: config.icon,
+				border: config.border,
 			};
 		}
 
