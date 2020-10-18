@@ -1,5 +1,5 @@
 ((LitElement) => {
-    console.info('NUMBERBOX_CARD 1.0');
+    console.info('NUMBERBOX_CARD 1.1');
 	const html = LitElement.prototype.html;
 	const css = LitElement.prototype.css;
 	class NumberBox extends LitElement {
@@ -143,7 +143,6 @@
 			const maxx=Number(this.stateObj.attributes.max);
 			const step=Number(this.stateObj.attributes.step);
 			const curr=Number(this.stateObj.state);
-			console.info(this.config);
 			if(addd){
 				const adval=(curr + step);
 				if( adval <=  maxx){
