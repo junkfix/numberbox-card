@@ -19,7 +19,7 @@ _OR_ install using [HACS](https://hacs.xyz/) and add this (if in YAML mode):
 ```yaml
 lovelace:
   resources:
-    - url: /hacsfiles/lovelace-numberbox-card/numberbox-card.js
+    - url: /hacsfiles/numberbox-card/numberbox-card.js
       type: module
 ```
 
