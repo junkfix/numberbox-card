@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 1.5');
+console.info('NUMBERBOX_CARD 1.6');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -41,6 +41,7 @@ static get styles() {
 		font-size:var(--paper-font-subhead_-_font-size);
 		line-height:var(--paper-font-subhead_-_line-height);
 		font-weight:normal;margin:0}
+	.cur-unit{font-size:80%;opacity:0.5}
 	.nopad{padding:0px}
 	.grid {
 	  display: grid;
@@ -75,9 +76,11 @@ shouldUpdate(changedProps) {
 render() {
 	if(!this.stateObj){return html`<ha-card>Missing:'${this.config.entity}'</ha-card>`;}
 	const vars={};
-	if( this.config.border === undefined || this.config.border){
-		vars['border']='';
-	}else{vars['border']='noborder';}
+	vars['icon_plus']=this.config.icon_plus ? this.config.icon_plus : 'mdi:plus';
+	vars['icon_minus']=this.config.icon_minus ? this.config.icon_minus : 'mdi:minus';
+	if( !this.config.border){
+		vars['border']='noborder';
+	}else{vars['border']='';}
 	if( this.config.icon === undefined && this.stateObj.attributes.icon ){
 		vars['icon']=this.stateObj.attributes.icon;
 	}else{
@@ -85,6 +88,15 @@ render() {
 			vars['icon']=this.config.icon;
 		}else{
 			vars['icon']=false;
+		}
+	}
+	if( this.config.unit === undefined && this.stateObj.attributes.unit_of_measurement ){
+		vars['unit']=this.stateObj.attributes.unit_of_measurement;
+	}else{
+		if(this.config.unit){
+			vars['unit']=this.config.unit;
+		}else{
+			vars['unit']=false;
 		}
 	}
 	if( this.config.name === undefined && this.stateObj.attributes.friendly_name ){
@@ -110,16 +122,16 @@ renderMain(vars) {
 			${vars.icon ? html`<ha-icon icon="${vars.icon}" style="margin-right:20px;color:var(--paper-item-icon-color);"></ha-icon>` : null }
 			${vars.name}
 			</div>
-		</div><div class="grid-content grid-right">${this.renderNum()}</div></div>` : this.renderNum() }
+		</div><div class="grid-content grid-right">${this.renderNum(vars)}</div></div>` : this.renderNum(vars) }
 	</ha-card>
 `;
 }
 
-renderNum(){
+renderNum(vars){
 	return html`<section class="body">
 			<div class="main">
 				<div class="cur-box">
-				<ha-icon-button class="nopad" icon="mdi:plus"
+				<ha-icon-button class="nopad" icon="${vars.icon_plus}"
 					@click="${() => this.incVal(this)}"
 					@mousedown="${() => this.onMouseDown(1)}"
 					@mouseup="${() => this.onMouseUp()}"
@@ -128,9 +140,9 @@ renderNum(){
 				>
 				</ha-icon-button>
 				<div class="cur-num-box" @click="${() => this.moreInfo('hass-more-info')}" >
-					<h3 class="cur-num" > ${this.niceNum()} </h3>
+					<h3 class="cur-num" > ${this.niceNum(vars)} </h3>
 				</div>
-				<ha-icon-button class="nopad" icon="mdi:minus"
+				<ha-icon-button class="nopad" icon="${vars.icon_minus}"
 					@click="${() => this.decVal(this)}"
 					@mousedown="${() => this.onMouseDown(0)}"
 					@mouseup="${() => this.onMouseUp()}"
@@ -157,6 +169,9 @@ setConfig(config) {
 		icon: config.icon,
 		border: config.border,
 		speed: config.speed,
+		unit: config.unit,
+		icon_plus: config.icon_plus,
+		icon_minus: config.icon_minus,
 	};
 }
 
@@ -180,10 +195,12 @@ decVal(dhis){
 	dhis._hass.callService("input_number", 'decrement', { entity_id: dhis.stateObj.entity_id });
 }
 
-niceNum(fix){
+niceNum(vars){
+	let fix=0;
 	const stp=Number(this.stateObj.attributes.step);
-	if( Math.round(stp) != stp ){ fix=1;}else{ fix=0;}
-	return Number(this.stateObj.state).toFixed(fix);
+	if( Math.round(stp) != stp ){ fix=1;}
+	fix = Number(this.stateObj.state).toFixed(fix);
+	return vars.unit ? html`${fix}<span class="cur-unit" >${vars.unit}</span>` : fix ;
 }
 
 moreInfo(type, options = {}) {
@@ -198,7 +215,7 @@ moreInfo(type, options = {}) {
 }
 
 onMouseDown(v) {
-	if( this.config.speed === undefined ){ this.config.speed=250;}
+	if( this.config.speed === undefined ){ this.config.speed=0;}
 	if( this.config.speed > 0 ){
 		this.onMouseUp();
 		if(v){
@@ -210,7 +227,7 @@ onMouseDown(v) {
 }
 
 onMouseUp() {
-	if( this.config.speed === undefined ){ this.config.speed=250;}
+	if( this.config.speed === undefined ){ this.config.speed=0;}
 	if( this.config.speed > 0 ){
 		clearInterval(this.rolling);
 	}
