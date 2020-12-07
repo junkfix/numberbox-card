@@ -55,6 +55,7 @@ static get styles() {
 	  font-size: var(--paper-font-body1_-_font-size);
 	  padding: 16px 0 16px 16px;
 	  cursor: pointer;
+	  overflow: hidden;
 	  text-overflow: ellipsis;
 	  word-break: keep-all;
 	  white-space: nowrap
