@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 1.7');
+console.info('NUMBERBOX_CARD 1.8');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -199,7 +199,7 @@ decVal(dhis){
 niceNum(vars){
 	let fix=0;
 	const stp=Number(this.stateObj.attributes.step);
-	if( Math.round(stp) != stp ){ fix=1;}
+	if( Math.round(stp) != stp ){ fix=stp.toString().split(".")[1].length || 1;}
 	fix = Number(this.stateObj.state).toFixed(fix);
 	return vars.unit ? html`${fix}<span class="cur-unit" >${vars.unit}</span>` : fix ;
 }
