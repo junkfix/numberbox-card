@@ -196,11 +196,22 @@ decVal(dhis){
 	dhis._hass.callService("input_number", 'decrement', { entity_id: dhis.stateObj.entity_id });
 }
 
+zeroFill(number, width){
+  width -= number.toString().length;
+  if ( width > 0 ){
+    return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+  }
+  return number + ""; // always return a string
+}
+
 niceNum(vars){
 	let fix=0;
 	const stp=Number(this.stateObj.attributes.step);
 	if( Math.round(stp) != stp ){ fix=stp.toString().split(".")[1].length || 1;}
 	fix = Number(this.stateObj.state).toFixed(fix);
+	if( vars.unit=="time" ){
+		return html`${this.zeroFill(Math.floor(fix/3600), 2)}:${this.zeroFill(Math.floor(fix/60), 2)}:${this.zeroFill(fix%60, 2)}`
+	}
 	return vars.unit ? html`${fix}<span class="cur-unit" >${vars.unit}</span>` : fix ;
 }
 
