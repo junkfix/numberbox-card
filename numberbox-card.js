@@ -32,8 +32,7 @@ static get styles() {
 		box-shadow:none !important;border:none !important}
 	.body{
 		display:grid;grid-auto-flow:column;grid-auto-columns:1fr;
-		place-items:center;padding:0 4px;
-		padding-bottom:2px}
+		place-items:center;padding:0 4px}
 	.main{display:flex;flex-direction:row;align-items:center;justify-content:center}
 	.cur-box{display:flex;align-items:center;justify-content:center;flex-direction:row-reverse}
 	.cur-num-box{display:flex;align-items:center}
@@ -42,7 +41,7 @@ static get styles() {
 		line-height:var(--paper-font-subhead_-_line-height);
 		font-weight:normal;margin:0}
 	.cur-unit{font-size:80%;opacity:0.5}
-	.padr,.padl{padding:6px 8px;cursor:pointer}
+	.padr,.padl{padding:8px;cursor:pointer}
 	.grid {
 	  display: grid;
 	  grid-template-columns: repeat(2, auto);
