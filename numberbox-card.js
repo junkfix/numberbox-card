@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 1.8');
+console.info('NUMBERBOX_CARD 1.9');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -42,7 +42,7 @@ static get styles() {
 		line-height:var(--paper-font-subhead_-_line-height);
 		font-weight:normal;margin:0}
 	.cur-unit{font-size:80%;opacity:0.5}
-	.nopad{padding:0px}
+	.padr,.padl{padding:6px 8px;cursor:pointer}
 	.grid {
 	  display: grid;
 	  grid-template-columns: repeat(2, auto);
@@ -53,7 +53,7 @@ static get styles() {
 	.grid-left {
 	  text-align: left;
 	  font-size: var(--paper-font-body1_-_font-size);
-	  padding: 16px 0 16px 16px;
+	  padding: 8px 0 8px 16px;
 	  cursor: pointer;
 	  overflow: hidden;
 	  text-overflow: ellipsis;
@@ -132,25 +132,25 @@ renderNum(vars){
 	return html`<section class="body">
 			<div class="main">
 				<div class="cur-box">
-				<ha-icon-button class="nopad" icon="${vars.icon_plus}"
+				<ha-icon class="padl" icon="${vars.icon_plus}"
 					@click="${() => this.incVal(this)}"
 					@mousedown="${() => this.onMouseDown(1)}"
 					@mouseup="${() => this.onMouseUp()}"
 					@touchstart="${() => this.onMouseDown(1)}"
 					@touchend="${() => this.onMouseUp()}"
 				>
-				</ha-icon-button>
+				</ha-icon>
 				<div class="cur-num-box" @click="${() => this.moreInfo('hass-more-info')}" >
 					<h3 class="cur-num" > ${this.niceNum(vars)} </h3>
 				</div>
-				<ha-icon-button class="nopad" icon="${vars.icon_minus}"
+				<ha-icon class="padr" icon="${vars.icon_minus}"
 					@click="${() => this.decVal(this)}"
 					@mousedown="${() => this.onMouseDown(0)}"
 					@mouseup="${() => this.onMouseUp()}"
 					@touchstart="${() => this.onMouseDown(0)}"
 					@touchend="${() => this.onMouseUp()}"
 				>
-				</ha-icon-button>
+				</ha-icon>
 				</div>
 			</div>
 			</section>`;
@@ -197,11 +197,11 @@ decVal(dhis){
 }
 
 zeroFill(number, width){
-  width -= number.toString().length;
-  if ( width > 0 ){
-    return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
-  }
-  return number + ""; // always return a string
+	width -= number.toString().length;
+	if ( width > 0 ){
+		return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+	}
+	return number + "";
 }
 
 niceNum(vars){
