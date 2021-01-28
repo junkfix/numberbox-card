@@ -1,10 +1,10 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 1.9');
+console.info('NUMBERBOX_CARD 2.0');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
-class NumberBox extends LitElement {
 
+class NumberBox extends LitElement {
 
 constructor() {
 	super();
@@ -244,7 +244,155 @@ onMouseUp() {
 	}
 }
 
+static getConfigElement() {
+    return document.createElement("numberbox-card-editor");
+}
 
+static getStubConfig() {
+	return {border: true};
+}
 
 } customElements.define('numberbox-card', NumberBox);
-})(window.LitElement || Object.getPrototypeOf(customElements.get("hui-masonry-view") || customElements.get("hui-view")));
+
+//Editor
+const includeDomains = ['input_number'];
+const fireEvent = (node, type, detail = {}, options = {}) => {
+	const event = new Event(type, {
+		bubbles: options.bubbles === undefined ? true : options.bubbles,
+		cancelable: Boolean(options.cancelable),
+		composed: options.composed === undefined ? true : options.composed,
+	});
+	event.detail = detail;
+	node.dispatchEvent(event);
+	return event;
+}
+
+class NumberBoxEditor extends LitElement {
+
+static get properties() {
+	return { hass: {}, config: {} };
+}
+
+static get styles() {
+	return css`
+.side {
+	display:flex;
+	align-items:center;
+}
+.side > * {
+	flex:1;
+	padding-right:4px;
+}	
+`;
+}
+get _border() {
+	if (this.config.border) {
+		return true;
+	} else {
+		return false;
+	}
+}
+setConfig(config) {
+	this.config = config;
+}
+
+render() {
+	if (!this.hass){ return html``; }
+	return html`
+<div class="side">
+	<ha-entity-picker
+		label="Entity (required)"
+		.hass=${this.hass}
+		.value="${this.config.entity}"
+		.configValue=${'entity'}
+		.includeDomains=${includeDomains}
+		@change="${this.updVal}"
+		allow-custom-entity
+	></ha-entity-picker>
+</div>
+<ha-formfield label="Show border?">
+	<ha-switch
+		.checked=${this._border}
+		.configValue="${'border'}"
+		@change=${this.updVal}
+	></ha-switch>
+</ha-formfield>
+<div class="side">
+	<paper-input
+		label="Name (Optional, false to hide)"
+		.value="${this.config.name}"
+		.configValue="${'name'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+	<paper-input
+		label="Icon (Optional, false to hide)"
+		.value="${this.config.icon}"
+		.configValue="${'icon'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+</div>
+<div class="side">
+	<ha-icon-input
+		label="Icon Plus [mdi:plus]"
+		.value="${this.config.icon_plus}"
+		.configValue=${'icon_plus'}
+		@value-changed=${this.updVal}
+	></ha-icon-input>
+	<ha-icon-input
+		label="Icon Minus [mdi:minus]"
+		.value="${this.config.icon_minus}"
+		.configValue=${'icon_minus'}
+		@value-changed=${this.updVal}
+	></ha-icon-input>
+</div>			
+<div class="side">
+	<ha-icon-input
+		label="Unit (false to hide)"
+		.value="${this.config.unit}"
+		.configValue=${'unit'}
+		@value-changed=${this.updVal}
+	></ha-icon-input>
+	<ha-icon-input
+		label="Speed [0] ms"
+		.value="${this.config.speed}"
+		.configValue=${'speed'}
+		@value-changed=${this.updVal}
+	></ha-icon-input>
+</div>
+`;
+}
+
+
+updVal(v) {
+	if (!this.config || !this.hass) {return;}
+	const { target } = v;
+	if (this[`_${target.configValue}`] === target.value) {
+		return;
+	}
+	if (target.configValue) {
+		if (target.value === '') {
+			delete this.config[target.configValue];
+		} else {
+		if (target.value === 'false') {target.value = false;}
+			this.config = {
+				...this.config,
+				[target.configValue]: target.checked !== undefined ? target.checked : target.value,
+			}
+		}
+	}
+	fireEvent(this, 'config-changed', { config: this.config });
+}
+
+}
+customElements.define("numberbox-card-editor", NumberBoxEditor);
+
+})(window.LitElement || Object.getPrototypeOf(customElements.get("hui-masonry-view") ));
+
+window.customCards = window.customCards || [];
+window.customCards.push({
+	type: 'numberbox-card',
+	name: 'Numberbox Card',
+	preview: false,
+	description: 'Replace input_number sliders with plus and minus buttons'
+});
+
