@@ -39,7 +39,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | speed | number | `0` | default disabled, milliseconds for long press auto change (eg. 250) 
 | icon_plus | string | `mdi:plus` | custom icon
 | icon_minus | string | `mdi:minus` | custom icon
-| unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide)
+| unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss
 ## Examples
 
 ![numberbox-card](https://github.com/htmltiger/numberbox-card/raw/main/example.png)
@@ -47,15 +47,32 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 Configurations:
 ```
 type: entities
+title: Example
+show_header_toggle: false
 entities:
+  - entity: input_number.my_slider
+  
+  - entity: input_number.my_slider
+    type: 'custom:numberbox-card'
+
+  - entity: input_number.my_slider
+    type: 'custom:numberbox-card'
+    unit: time
+
   - entity: input_number.my_slider
     type: 'custom:numberbox-card'
     icon_plus: 'mdi:chevron-up'
     icon_minus: 'mdi:chevron-down'
     style: |
-      .cur-num{font-size:40px!important}
-```
+      .cur-num{font-size:25px !important}
+      .cur-unit{color:orange; font-size:100% !important; opacity:1 !important}
+      .grid-left{color:red}
+      .grid-right{color:blue}
 
+style: |
+  #states{padding:8px 10px !important}
+```
+![numberbox-card](https://github.com/htmltiger/numberbox-card/raw/main/example2.png)
 ```yaml
 - type: custom:numberbox-card
   entity: input_number.my_slider
@@ -64,4 +81,4 @@ entities:
   border: true
   speed: 250
 ```
-
+It is also possible to add this using `+ Add Card` UI and choose `Custom: Numberbox Card`
