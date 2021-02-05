@@ -36,7 +36,6 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | name | string/bool | `friendly_name` | Override friendly name (set to `false` to hide)
 | icon | string/bool | `icon` | Override icon (set to `false` to hide)
 | border | bool | `false` | set to `true` to show borders
-| speed | number | `0` | default disabled, milliseconds for long press auto change (eg. 250) 
 | icon_plus | string | `mdi:plus` | custom icon
 | icon_minus | string | `mdi:minus` | custom icon
 | unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss
@@ -79,6 +78,5 @@ style: |
   name: My Title
   icon: 'mdi:fire'
   border: true
-  speed: 250
 ```
 It is also possible to add this using `+ Add Card` UI and choose `Custom: Numberbox Card`
