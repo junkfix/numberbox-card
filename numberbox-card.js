@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 2.1');
+console.info('NUMBERBOX_CARD 2.2');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -154,8 +154,10 @@ getCardSize() {
 
 setConfig(config) {
 	if (!config.entity) throw new Error('Please define an entity.');
-	if (config.entity.split('.')[0] !== 'input_number')
-		{throw new Error('Please define a input_number entity.');}
+	let c=config.entity.split('.')[0];
+	if (!(c == 'input_number' || c == 'number' )){
+		throw new Error('Please define a number entity.');
+	}
 	this.config = {
 		name: config.name,
 		entity: config.entity,
@@ -174,11 +176,6 @@ set hass(hass) {
 	this._hass = hass;
 }
 
-callService(service, data = {entity_id: this.stateObj.entity_id}) {
-	const [domain, name] = service.split('.');
-	this._hass.callService(domain, name, data);
-}
-
 setNumb(c){
 	let v=this.pending;
 	const step=Number(this.stateObj.attributes.step);
@@ -194,7 +191,7 @@ setNumb(c){
 publishNum(dhis){
 	const v=dhis.pending;
 	dhis.pending=false;
-	dhis._hass.callService("input_number", "set_value", { entity_id: dhis.stateObj.entity_id, value: v });
+	dhis._hass.callService(dhis.stateObj.entity_id.split('.')[0], "set_value", { entity_id: dhis.stateObj.entity_id, value: v });
 }
 
 zeroFill(number, width){
@@ -239,7 +236,7 @@ static getStubConfig() {
 } customElements.define('numberbox-card', NumberBox);
 
 //Editor
-const includeDomains = ['input_number'];
+const includeDomains = ['input_number','number'];
 const fireEvent = (node, type, detail = {}, options = {}) => {
 	const event = new Event(type, {
 		bubbles: options.bubbles === undefined ? true : options.bubbles,
@@ -371,6 +368,6 @@ window.customCards.push({
 	type: 'numberbox-card',
 	name: 'Numberbox Card',
 	preview: false,
-	description: 'Replace input_number sliders with plus and minus buttons'
+	description: 'Replace number/input_number sliders with plus and minus buttons'
 });
 
