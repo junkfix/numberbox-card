@@ -1,6 +1,6 @@
 # numberbox-card
 
-NumberBox for input sliders
+NumberBox for input sliders and number entities
 
 Inspired from [simple thermostat](https://github.com/nervetattoo/simple-thermostat)
 
@@ -32,7 +32,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | Name | Type | Default | Description
 | ---- | ---- | ------- | -----------
 | type | string | **Required** | `custom:numberbox-card`
-| entity | string | **Required** | `input_number.my_slider`
+| entity | string | **Required** | `input_number.my_slider` or `number.my_number`
 | name | string/bool | `friendly_name` | Override friendly name (set to `false` to hide)
 | icon | string/bool | `icon` | Override icon (set to `false` to hide)
 | border | bool | `false` | set to `true` to show borders
