@@ -52,6 +52,7 @@ title: Example
 show_header_toggle: false
 entities:
   - entity: input_number.my_slider
+    secondary_info: last-changed
   
   - entity: input_number.my_slider
     type: 'custom:numberbox-card'
