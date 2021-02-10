@@ -55,6 +55,9 @@ entities:
   
   - entity: input_number.my_slider
     type: 'custom:numberbox-card'
+    icon: 'mdi:timelapse'
+    secondary_info: last-changed
+    unit: S
 
   - entity: input_number.my_slider
     type: 'custom:numberbox-card'
