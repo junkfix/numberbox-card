@@ -30,7 +30,11 @@ render() {
 	<ha-card class="${(!this.config.border)?'noborder':''}">
 		${(this.config.icon || this.config.name) ? html`<div class="grid">
 		<div class="grid-content grid-left" @click="${() => this.moreInfo('hass-more-info')}">
-			${this.config.icon ? html`<state-badge .overrideIcon="${this.config.icon}"></state-badge>` : null }
+			${this.config.icon ? html`
+				<state-badge
+				.overrideIcon="${this.config.icon}"
+				.stateObj=${this.stateObj}
+				></state-badge>` : null }
 			<div class="info">
 				${this.config.name?this.config.name:''}
 				${this.secondaryInfo()}
