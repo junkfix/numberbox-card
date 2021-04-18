@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 2.4');
+console.info('NUMBERBOX_CARD 2.5');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -77,7 +77,8 @@ setNumb(c){
 	let v=this.pending; const a=this.stateObj.attributes;
 	const step=Number(a.step);
 	if( v===false ){ v=Number(this.stateObj.state); v=isNaN(v)?a.min:v;}
-	const adval=c?(v + step):(v - step);
+	let adval=c?(v + step):(v - step);
+	adval=Math.round(adval*1000)/1000
 	if( adval <=  Number(a.max) && adval >= Number(a.min)){
 		this.pending=(adval);
 		clearTimeout(this.bounce);
