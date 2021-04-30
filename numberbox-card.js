@@ -80,9 +80,13 @@ setNumb(c){
 	let adval=c?(v + step):(v - step);
 	adval=Math.round(adval*1000)/1000
 	if( adval <=  Number(a.max) && adval >= Number(a.min)){
-		this.pending=(adval);
-		clearTimeout(this.bounce);
-		this.bounce = setTimeout(this.publishNum, this.config.delay, this);
+		if(this.config.delay){
+			this.pending=(adval);
+			clearTimeout(this.bounce);
+			this.bounce = setTimeout(this.publishNum, this.config.delay, this);
+		}else{
+			this._hass.callService(this.stateObj.entity_id.split('.')[0], "set_value", { entity_id: this.stateObj.entity_id, value: adval });
+		}
 	}
 }
 
