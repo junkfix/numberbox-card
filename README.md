@@ -38,6 +38,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | border | bool | `false` | set to `true` to show borders
 | icon_plus | string | `mdi:plus` | custom icon
 | icon_minus | string | `mdi:minus` | custom icon
+| initial | string | `?` | initial value
 | delay | string | `1000` | delay after pressing in ms, `0` to disable
 | secondary_info | string |  | `last-changed`
 | unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss
