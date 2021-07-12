@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 2.7');
+console.info('NUMBERBOX_CARD 2.8');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -98,8 +98,14 @@ publishNum(dhis){
 
 niceNum(){
 	let fix=0; let v=this.pending;
-	if( v === false ){ v=Number(this.stateObj.state); if(isNaN(v)){return '?';}}
-	const stp=Number(this.stateObj.attributes.step);
+	if( v === false ){
+		v=Number(this.stateObj.state);
+		if(isNaN(v)){
+			if(this.config.initial === undefined){return '?';}
+			v=Number(this.config.initial);
+		}
+	}	
+	const stp=Number(this.stateObj.attributes.step) || 1;
 	if( Math.round(stp) != stp ){ fix=stp.toString().split(".")[1].length || 1;}
 	fix = v.toFixed(fix);
 	const u=this.config.unit;
@@ -214,6 +220,7 @@ setConfig(config) {
 		icon_plus: config.icon_plus,
 		icon_minus: config.icon_minus,
 		delay: config.delay,
+		initial: config.initial,
 		secondary_info: config.secondary_info,
 	};
 }
@@ -226,7 +233,7 @@ set hass(hass) {
 }
 
 shouldUpdate(changedProps) {
-	if( changedProps.has('stateObj') || changedProps.has('pending') ){return true;}
+	if( changedProps.has('config') || changedProps.has('stateObj') || changedProps.has('pending') ){return true;}
 }
 
 static getConfigElement() {
@@ -294,6 +301,13 @@ render() {
 		@change="${this.updVal}"
 		allow-custom-entity
 	></ha-entity-picker>
+	<ha-formfield label="Show border?">
+		<ha-switch
+			.checked=${this._border}
+			.configValue="${'border'}"
+			@change=${this.updVal}
+		></ha-switch>
+	</ha-formfield>
 </div>
 <div class="side">
 	<paper-input
@@ -302,13 +316,12 @@ render() {
 		.configValue="${'secondary_info'}"
 		@value-changed="${this.updVal}"
 	></paper-input>
-	<ha-formfield label="Show border?">
-		<ha-switch
-			.checked=${this._border}
-			.configValue="${'border'}"
-			@change=${this.updVal}
-		></ha-switch>
-	</ha-formfield>
+	<ha-icon-input
+		label="Initial (Default ?)"
+		.value="${this.config.initial}"
+		.configValue=${'initial'}
+		@value-changed=${this.updVal}
+	></ha-icon-input>
 </div>
 <div class="side">
 	<paper-input
