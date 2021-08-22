@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 2.8');
+console.info('NUMBERBOX_CARD 2.9');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -99,9 +99,10 @@ publishNum(dhis){
 niceNum(){
 	let fix=0; let v=this.pending;
 	if( v === false ){
-		v=Number(this.stateObj.state);
-		if(isNaN(v)){
-			if(this.config.initial === undefined){return '?';}
+		v=this.stateObj.state;
+		if(v=='unavailable' || ( v=='unknown' && this.config.initial === undefined ) ){return '?';}
+		v=Number(v);
+		if(isNaN(v) && this.config.initial !== undefined){
 			v=Number(this.config.initial);
 		}
 	}	
