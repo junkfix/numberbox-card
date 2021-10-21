@@ -42,6 +42,46 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | delay | string | `1000` | delay after pressing in ms, `0` to disable
 | secondary_info | string |  | `last-changed`
 | unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss
+
+#### Advanced Config for climate/fan etc
+
+
+| Name | Type | Default | Description
+| ---- | ---- | ------- | -----------
+| state | string | `undefined` | set it for attribute display
+| min | number | attribute `min` |  
+| max | number | attribute `max`  |  
+| step | number | attribute `step`  |  
+| param | string | `value` |  service parameter
+| service | string | `set_value` |  service name
+
+```
+type: entities
+entities:
+  - type: custom:numberbox-card
+    entity: climate.heating
+    icon: mdi:fire
+    state: temperature
+    service: set_temperature
+    param: temperature
+    min: 0
+    max: 30
+    step: 0.5
+
+type: entities
+entities:
+  - type: custom:numberbox-card
+    entity: fan.smartfan_fan
+    icon: mdi:fan
+    state: percentage
+    service: set_percentage
+    param: percentage
+    min: 0
+    max: 100
+    step: 20
+
+```
+
 ## Examples
 
 ![numberbox-card](https://github.com/htmltiger/numberbox-card/raw/main/example.png)
