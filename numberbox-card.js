@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 3.0');
+console.info('NUMBERBOX_CARD 3.1');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -33,6 +33,7 @@ render() {
 	if(this.config.step === undefined){ this.config.step=this.stateObj.attributes.step;}
 	if(!this.config.service){this.config.service="set_value";}
 	if(!this.config.param){this.config.param="value";}
+	if(!this.config.speed){ this.config.speed=0;}
 
 
 	return html`
@@ -70,20 +71,41 @@ renderNum(){
 	<section class="body">
 	<div class="main">
 		<div class="cur-box">
-		<ha-icon class="padl" icon="${this.config.icon_plus}" @click="${() => this.setNumb(1)}" >
+		<ha-icon class="padl" 
+			icon="${this.config.icon_plus}" 
+			@click="${() => this.setNumb(1)}" 
+			@mousedown="${() => this.Press(1)}"
+			@touchstart="${() => this.Press(1)}"
+			@mouseup="${() => this.Press(2)}"
+			@touchend="${() => this.Press(2)}"
+		>
 		</ha-icon>
 		<div class="cur-num-box" @click="${() => this.moreInfo('hass-more-info')}" >
 			<h3 class="cur-num ${(this.pending===false)? '':'upd'}" > ${this.niceNum()} </h3>
 		</div>
-		<ha-icon class="padr" icon="${this.config.icon_minus}" @click="${() => this.setNumb(0)}" >
+		<ha-icon class="padr"
+			icon="${this.config.icon_minus}"
+			@click="${() => this.setNumb(0)}"
+			@mousedown="${() => this.Press(0)}"
+			@touchstart="${() => this.Press(0)}"
+			@mouseup="${() => this.Press(2)}"
+			@touchend="${() => this.Press(2)}"
+		>
 		</ha-icon>
 		</div>
 	</div>
 	</section>`;
 }
 
+Press(v) {
+	if( this.config.speed>0 ){
+		clearInterval(this.rolling);
+		if(v<2){this.rolling = setInterval(() => this.setNumb(v), this.config.speed, this);}
+	}
+}
+
 setNumb(c){
-	let v=this.pending; const a=this.stateObj.attributes;
+	let v=this.pending;
 	if( v===false ){ v=Number(this.state); v=isNaN(v)?this.config.min:v;}
 	let adval=c?(v + Number(this.config.step)):(v - Number(this.config.step));
 	adval=Math.round(adval*1000)/1000
@@ -232,6 +254,7 @@ setConfig(config) {
 		icon_plus: config.icon_plus,
 		icon_minus: config.icon_minus,
 		delay: config.delay,
+		speed: config.speed,
 		initial: config.initial,
 		secondary_info: config.secondary_info,
 		state: config.state,
@@ -334,12 +357,6 @@ render() {
 		.configValue="${'secondary_info'}"
 		@value-changed="${this.updVal}"
 	></paper-input>
-	<ha-icon-input
-		label="Initial (Default ?)"
-		.value="${this.config.initial}"
-		.configValue=${'initial'}
-		@value-changed=${this.updVal}
-	></ha-icon-input>
 </div>
 <div class="side">
 	<paper-input
@@ -356,32 +373,46 @@ render() {
 	></paper-input>
 </div>
 <div class="side">
-	<ha-icon-input
+	<ha-icon-picker
 		label="Icon Plus [mdi:plus]"
 		.value="${this.config.icon_plus}"
 		.configValue=${'icon_plus'}
 		@value-changed=${this.updVal}
-	></ha-icon-input>
-	<ha-icon-input
+	></ha-icon-picker>
+	<ha-icon-picker
 		label="Icon Minus [mdi:minus]"
 		.value="${this.config.icon_minus}"
 		.configValue=${'icon_minus'}
 		@value-changed=${this.updVal}
-	></ha-icon-input>
+	></ha-icon-picker>
 </div>			
 <div class="side">
-	<ha-icon-input
+	<paper-input
+		label="Initial [?]"
+		.value="${this.config.initial}"
+		.configValue=${'initial'}
+		@value-changed=${this.updVal}
+	></paper-input>
+	<paper-input
 		label="Unit (false to hide)"
 		.value="${this.config.unit}"
 		.configValue=${'unit'}
 		@value-changed=${this.updVal}
-	></ha-icon-input>
-	<ha-icon-input
-		label="Delay (Default [1000] ms)"
+	></paper-input>
+</div>
+<div class="side">
+	<paper-input
+		label="Update Delay [1000] ms)"
 		.value="${this.config.delay}"
 		.configValue=${'delay'}
 		@value-changed=${this.updVal}
-	></ha-icon-input>
+	></paper-input>
+	<paper-input
+		label="Long press Speed [0] ms)"
+		.value="${this.config.speed}"
+		.configValue=${'speed'}
+		@value-changed=${this.updVal}
+	></paper-input>
 </div>
 `;
 }
