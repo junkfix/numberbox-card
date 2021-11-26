@@ -40,6 +40,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | icon_minus | string | `mdi:minus` | custom icon
 | initial | string | `?` | initial value
 | delay | string | `1000` | delay after pressing in ms, `0` to disable
+| speed | string | `0` | long press speed in ms, `0` to disable
 | secondary_info | string |  | `last-changed`
 | unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss
 
@@ -67,6 +68,7 @@ entities:
     min: 0
     max: 30
     step: 0.5
+    speed: 500
 
 type: entities
 entities:
