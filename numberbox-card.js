@@ -174,6 +174,7 @@ static get properties() {
 		config: {},
 		stateObj: {},
 		bounce: {},
+		rolling: {},
 		pending: {},
 		state: {},
 	}
