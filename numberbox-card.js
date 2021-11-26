@@ -365,12 +365,12 @@ render() {
 		.configValue="${'name'}"
 		@value-changed="${this.updVal}"
 	></paper-input>
-	<paper-input
+	<ha-icon-picker
 		label="Icon (Optional, false to hide)"
 		.value="${this.config.icon}"
 		.configValue="${'icon'}"
 		@value-changed="${this.updVal}"
-	></paper-input>
+	></ha-icon-picker>
 </div>
 <div class="side">
 	<ha-icon-picker
