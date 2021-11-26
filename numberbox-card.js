@@ -402,13 +402,13 @@ render() {
 </div>
 <div class="side">
 	<paper-input
-		label="Update Delay [1000] ms)"
+		label="Update Delay [1000] ms"
 		.value="${this.config.delay}"
 		.configValue=${'delay'}
 		@value-changed=${this.updVal}
 	></paper-input>
 	<paper-input
-		label="Long press Speed [0] ms)"
+		label="Long press Speed [0] ms"
 		.value="${this.config.speed}"
 		.configValue=${'speed'}
 		@value-changed=${this.updVal}
