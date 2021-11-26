@@ -9,6 +9,7 @@ constructor() {
 	super();
 	this.bounce = false;
 	this.pending = false;
+	this.rolling = false;
 	this.state = 0;
 }
 
