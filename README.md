@@ -127,5 +127,10 @@ style: |
   name: My Title
   icon: 'mdi:fire'
   border: true
+  card_mod:
+    style: |
+      ha-card .cur-num {
+         color: green;
+       }  
 ```
 It is also possible to add this using `+ Add Card` UI and choose `Custom: Numberbox Card`
