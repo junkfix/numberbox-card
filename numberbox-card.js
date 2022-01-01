@@ -187,7 +187,6 @@ static get styles() {
 		font-weight:var(--paper-font-body1_-_font-weight);
 		line-height:var(--paper-font-body1_-_line-height);
 		padding:4px 0}
-	.secondary{color:var(--secondary-text-color);}
 	state-badge{flex:0 0 40px;}
 	ha-card.noborder{padding:0 !important;margin:0 !important;
 		box-shadow:none !important;border:none !important}
@@ -233,6 +232,9 @@ static get styles() {
 	.grid-right {
 	  text-align: right
 	}
+	.secondary{
+           color:var(--secondary-text-color);
+           white-space: normal;}
 	`;
 }
 
