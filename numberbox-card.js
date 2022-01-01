@@ -64,7 +64,12 @@ secondaryInfo(){
 		<div class="secondary">
 		<ha-relative-time .datetime=${t} .hass=${this._hass} ></ha-relative-time>
 		</div>`;
-	}
+	} else {
+		return html`
+		<div class="secondary">
+		${this.config.secondary_info}
+		</div>`;
+        }
 }
 
 renderNum(){
