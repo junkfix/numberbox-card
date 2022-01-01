@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 3.1');
+console.info('NUMBERBOX_CARD 3.2');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -56,15 +56,14 @@ render() {
 }
 
 secondaryInfo(){
-	if(!this.config.secondary_info){return;}
-	const v=this.config.secondary_info.replace('-','_');
-	if(this.stateObj[v]){
-		const t = new Date(this.stateObj[v]);
-		return html`
-		<div class="secondary">
-		<ha-relative-time .datetime=${t} .hass=${this._hass} ></ha-relative-time>
-		</div>`;
-	}
+	const s=this.config.secondary_info;
+	if(!s){return;}
+	const v=s.replace('-','_');
+	return html`<div class="secondary"> ${(this.stateObj[v])? 
+	html`<ha-relative-time
+		.datetime=${new Date(this.stateObj[v])}
+		.hass=${this._hass}
+	></ha-relative-time>`:s}</div>`;
 }
 
 renderNum(){
@@ -188,7 +187,7 @@ static get styles() {
 		font-weight:var(--paper-font-body1_-_font-weight);
 		line-height:var(--paper-font-body1_-_line-height);
 		padding:4px 0}
-	ha-relative-time{color:var(--secondary-text-color);}
+	.secondary{color:var(--secondary-text-color);}
 	state-badge{flex:0 0 40px;}
 	ha-card.noborder{padding:0 !important;margin:0 !important;
 		box-shadow:none !important;border:none !important}
