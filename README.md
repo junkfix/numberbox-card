@@ -41,7 +41,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | initial | string | `?` | initial value
 | delay | string | `1000` | delay after pressing in ms, `0` to disable
 | speed | string | `0` | long press speed in ms, `0` to disable
-| secondary_info | string |  | `last-changed`
+| secondary_info | string |  | `last-changed` `last-updated` or any text
 | unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss
 
 #### Advanced Config for climate/fan etc
