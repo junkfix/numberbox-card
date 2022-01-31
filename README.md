@@ -113,6 +113,7 @@ entities:
     icon_minus: 'mdi:chevron-down'
     style: |
       .cur-num{font-size:25px !important}
+      .cur-num.upd{color:green}
       .cur-unit{color:orange; font-size:100% !important; opacity:1 !important}
       .grid-left{color:red}
       .grid-right{color:blue}
