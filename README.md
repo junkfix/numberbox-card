@@ -54,7 +54,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | max | number | attribute `max`  |  
 | step | number | attribute `step`  |  
 | param | string | `value` |  service parameter
-| service | string | `set_value` |  service name
+| service | string | `input_number.set_value` |  service name
 
 ```
 type: entities
@@ -63,7 +63,7 @@ entities:
     entity: climate.heating
     icon: mdi:fire
     state: temperature
-    service: set_temperature
+    service: climate.set_temperature
     param: temperature
     min: 0
     max: 30
@@ -76,7 +76,7 @@ entities:
     entity: fan.smartfan_fan
     icon: mdi:fan
     state: percentage
-    service: set_percentage
+    service: fan.set_percentage
     param: percentage
     min: 0
     max: 100
