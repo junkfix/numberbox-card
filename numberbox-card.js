@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 3.7');
+console.info('NUMBERBOX_CARD 3.8');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -11,7 +11,7 @@ constructor() {
 	this.pending = false;
 	this.rolling = false;
 	this.state = 0;
-	this.old = {state: undefined, t:{}}
+	this.old = {state: undefined, t:{}, h:''}
 }
 
 render() {
@@ -57,10 +57,19 @@ render() {
 `;
 }
 
+updated(x) {
+	if(this.old.h !=''){
+		const a=this.renderRoot.querySelector('.secondary');
+		if(a){a.innerHTML=this.old.h;}
+	}
+}
+
+
 secondaryInfo(){
 	const s=this.config.secondary_info;
 	if(!s){return;}
-	let r=s;	
+	let r=s;
+	let h=s;
 	if(s.indexOf('%')> -1){
 		const j=s.split(' ');
 		for (let i in j) {
@@ -83,10 +92,13 @@ secondaryInfo(){
 	}else{
 		const v=s.replace('-','_');
 		if(this.stateObj[v]){
+			h='';
 			r=html`<ha-relative-time .datetime=${new Date(this.stateObj[v])}
 						.hass=${this._hass} ></ha-relative-time>`;
 		}
 	}
+	if(h){h=r; r='';}
+	this.old.h=h;
 	return html`<div class="secondary">${r}</div>`;
 }
 
@@ -148,7 +160,7 @@ publishNum(dhis){
 	const s=dhis.config.service.split('.');
 	const v={entity_id: dhis.config.entity, [dhis.config.param]: dhis.pending};
 	dhis.pending=false;
-	dhis.laststate=dhis.state;
+	dhis.old.state=dhis.state;
 	dhis._hass.callService(s[0], s[1], v);
 }
 
@@ -305,14 +317,16 @@ set hass(hass) {
 		this.stateObj = this.config.entity in hass.states ? hass.states[this.config.entity] : null;
 	}
 	this._hass = hass;
+	if(this.stateObj){
+		this.state=this.stateObj.state;
+		if(this.config.state){this.state=this.stateObj.attributes[this.config.state];}
+	}
 }
 
 shouldUpdate(changedProps) {
 	const o = this.old.t;
 	for(const p in o){if(this._hass.states[p].last_updated != o[p]){ return true; }}
 	if( changedProps.has('config') || changedProps.has('stateObj') || changedProps.has('pending') ){
-		this.state=this.stateObj.state;
-		if(this.config.state){this.state=this.stateObj.attributes[this.config.state];}
 		if(this.old.state != this.state){ return true; }
 	}
 }

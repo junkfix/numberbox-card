@@ -41,7 +41,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | initial | string | `?` | initial value when `unknown` or `unavailable` state
 | delay | string | `1000` | delay after pressing in ms, `0` to disable
 | speed | string | `0` | long press speed in ms, `0` to disable
-| secondary_info | string |  | `last-changed` `last-updated` or any text,<br />you can also display states or other attributes of any entity for eg. <br /> `Light is %light.office_1:state` <br />`Room temp is %climate.heating:attributes:current_temperature`
+| secondary_info | string |  | `last-changed` `last-updated` or any text/html,<br />you can also display states or other attributes of any entity for eg. <br /> `Light is %light.office_1:state` <br />`Room temp is %climate.heating:attributes:current_temperature`
 | unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss
 
 #### Advanced Config for climate/fan etc
@@ -81,8 +81,28 @@ entities:
     min: 0
     max: 100
     step: 20
-
 ```
+
+![numberbox-card](https://github.com/htmltiger/numberbox-card/raw/main/example3.png)
+```
+type: entities
+entities:
+  - type: custom:numberbox-card
+    entity: climate.downstairs_heating
+    icon: mdi:fire
+    service: climate.set_temperature
+    param: temperature
+    state: temperature
+    min: 0
+    max: 30
+    step: 0.5
+    secondary_info: >
+      Mode: <b style="color:red">
+      %climate.downstairs_heating:attributes:hvac_action </b><br />
+      Current temp:<b style="color:green">
+      %climate.downstairs_heating:attributes:current_temperature </b>
+```
+
 
 ## Examples
 
