@@ -97,10 +97,8 @@ entities:
     max: 30
     step: 0.5
     secondary_info: >
-      Mode: <b style="color:red">
-      %climate.downstairs_heating:attributes:hvac_action </b><br />
-      Current temp:<b style="color:green">
-      %climate.downstairs_heating:attributes:current_temperature </b>
+      Mode: <b style="color:red"> %climate.downstairs_heating:attributes:hvac_action </b><br />
+      Current temp:<b style="color:green"> %climate.downstairs_heating:attributes:current_temperature </b>
 ```
 
 
