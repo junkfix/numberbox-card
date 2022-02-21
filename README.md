@@ -81,6 +81,20 @@ entities:
     min: 0
     max: 100
     step: 20
+
+# Timer duration change
+type: entities
+entities:
+  - type: custom:numberbox-card
+    entity: timer.heating
+    icon: mdi:fire
+    service: timer.start
+    param: duration
+    state: duration
+    min: 0
+    max: 999999
+    step: 60
+    unit: time
 ```
 
 ![numberbox-card](https://github.com/htmltiger/numberbox-card/raw/main/example3.png)
@@ -152,4 +166,6 @@ style: |
          color: green;
        }  
 ```
+
+
 It is also possible to add this using `+ Add Card` UI and choose `Custom: Numberbox Card`
