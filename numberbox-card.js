@@ -132,7 +132,7 @@ Press(v) {
 }
 
 timeNum(x,s,m){
-	x=x.toString();
+	x=x+'';
 	if(x.indexOf(':')>0){
 		x = x.split(':');s = 0; m = 1;
 		while (x.length > 0) {
