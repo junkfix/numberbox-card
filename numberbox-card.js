@@ -11,7 +11,7 @@ constructor() {
 	this.pending = false;
 	this.rolling = false;
 	this.state = 0;
-	this.old = {state: undefined, t:{}, h:''}
+	this.old = {state: undefined, t:{}, h:''};
 }
 
 render() {
@@ -148,7 +148,7 @@ setNumb(c){
 	let v=this.pending;
 	if( v===false ){ v=this.timeNum(this.state); v=isNaN(v)?this.config.min:v;}
 	let adval=c?(v + Number(this.config.step)):(v - Number(this.config.step));
-	adval=Math.round(adval*1000)/1000
+	adval=Math.round(adval*1000)/1000;
 	if( adval <= Number(this.config.max) && adval >= Number(this.config.min)){
 		this.pending=(adval);
 		if(this.config.delay){
@@ -186,8 +186,8 @@ niceNum(){
 	const u=this.config.unit;
 	if( u=="time" ){
 		let t = fix>=3600? Math.floor(fix/3600).toString().padStart(2,'0') + ':' : '';
-		t += (Math.floor(fix/60)-Math.floor(fix/3600)*60).toString().padStart(2,'0')
-		t += ':' + (fix%60).toString().padStart(2,'0')
+		t += (Math.floor(fix/60)-Math.floor(fix/3600)*60).toString().padStart(2,'0');
+		t += ':' + (fix%60).toString().padStart(2,'0');
 		return html`${t}`;
 	}
 	fix = new Intl.NumberFormat(
@@ -217,7 +217,7 @@ static get properties() {
 		pending: {},
 		state: {},
 		old: {},
-	}
+	};
 }
 
 static get styles() {
@@ -345,7 +345,7 @@ const fireEvent = (node, type, detail = {}, options = {}) => {
 	event.detail = detail;
 	node.dispatchEvent(event);
 	return event;
-}
+};
 
 class NumberBoxEditor extends LitElement {
 
@@ -479,7 +479,7 @@ updVal(v) {
 			this.config = {
 				...this.config,
 				[target.configValue]: target.checked !== undefined ? target.checked : target.value,
-			}
+			};
 		}
 	}
 	fireEvent(this, 'config-changed', { config: this.config });
