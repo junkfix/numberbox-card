@@ -168,5 +168,27 @@ style: |
        }  
 ```
 
+ 
+![numberbox-card](https://github.com/htmltiger/numberbox-card/raw/main/example4.png)
+```yaml
+type: horizontal-stack
+cards:
+  - type: custom:numberbox-card
+    border: true
+    entity: number.office_temp
+    name: false
+    style: >
+      .body{display:block!important}
+      .body::after{text-align:center;font-size:10px;content:"Temperature";display:block!important}
+  - type: custom:numberbox-card
+    border: true
+    entity: number.office_timer
+    unit: time
+    name: false
+    style: >
+      .body{display:block!important}
+      .body::after{text-align:center;font-size:10px;content:"Minutes";display:block!important}
+```
+
 
 It is also possible to add this using `+ Add Card` UI and choose `Custom: Numberbox Card`
