@@ -89,7 +89,6 @@ entities:
     entity: input_datetime.timer_time
     service: input_datetime.set_datetime
     param: time
-    state: timestamp
     unit: time
     step: 60
 
