@@ -83,6 +83,17 @@ entities:
     max: 100
     step: 20
 
+type: entities
+entities:
+  - type: custom:numberbox-card
+    entity: input_datetime.timer_time
+    service: input_datetime.set_datetime
+    param: timestamp
+    state: timestamp
+    unit: time
+    step: 60
+
+
 # Timer duration change
 type: entities
 entities:
