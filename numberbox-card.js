@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 3.11');
+console.info('NUMBERBOX_CARD 3.12');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -146,6 +146,13 @@ timeNum(x,s,m){
 	return Number(x);
 }
 
+numTime(x,f,t){
+	t = (x>=3600 || f)? Math.floor(x/3600).toString().padStart(2,'0') + ':' : '';
+	t += (Math.floor(x/60)-Math.floor(x/3600)*60).toString().padStart(2,'0');
+	t += ':' + (x%60).toString().padStart(2,'0');
+	return t;
+}
+
 setNumb(c){
 	let v=this.pending;
 	if( v===false ){ v=this.timeNum(this.state); v=isNaN(v)?this.config.min:v;}
@@ -164,10 +171,11 @@ setNumb(c){
 
 publishNum(dhis){
 	const s=dhis.config.service.split('.');
-	if(s[0]=='input_datetime'){dhis.pending-=3600;}
+	if(s[0]=='input_datetime'){dhis.pending=dhis.numTime(dhis.pending,1);}
 	const v={entity_id: dhis.config.entity, [dhis.config.param]: dhis.pending};
 	dhis.pending=false;
 	dhis.old.state=dhis.state;
+							  
 	dhis._hass.callService(s[0], s[1], v);
 }
 
@@ -188,9 +196,7 @@ niceNum(){
 	fix = v.toFixed(fix);
 	const u=this.config.unit;
 	if( u=="time" ){
-		let t = fix>=3600? Math.floor(fix/3600).toString().padStart(2,'0') + ':' : '';
-		t += (Math.floor(fix/60)-Math.floor(fix/3600)*60).toString().padStart(2,'0');
-		t += ':' + (fix%60).toString().padStart(2,'0');
+		let t = this.numTime(fix);
 		return html`${t}`;
 	}
 	fix = new Intl.NumberFormat(
