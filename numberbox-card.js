@@ -157,7 +157,7 @@ setNumb(c){
 	let v=this.pending;
 	if( v===false ){ v=this.timeNum(this.state); v=isNaN(v)?this.config.min:v;}
 	let adval=c?(v + Number(this.config.step)):(v - Number(this.config.step));
-	adval=Math.round(adval*1000)/1000;
+	adval=Math.round(adval*1e9)/1e9;
 	if( adval <= Number(this.config.max) && adval >= Number(this.config.min)){
 		this.pending=(adval);
 		if(this.config.delay){
