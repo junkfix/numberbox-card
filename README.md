@@ -53,6 +53,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | min | number | attribute `min` |  
 | max | number | attribute `max`  |  
 | step | number | attribute `step`  |  
+| step_entity | string | | eg `sensor.my_step_size`  |  
 | param | string | `value` |  service parameter
 | service | string | `input_number.set_value` |  service name
 | moreinfo | string | entity | More info click entity, `false` to disable  |  
