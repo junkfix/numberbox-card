@@ -42,7 +42,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | delay | string | `1000` | delay after pressing in ms, `0` to disable
 | speed | string | `0` | long press speed in ms, `0` to disable
 | secondary_info | string |  | `last-changed` `last-updated` or any text/html,<br />you can also display states or other attributes of any entity for eg. <br /> `Light is %light.office_1:state` <br />`Room temp is %climate.heating:attributes:current_temperature`
-| unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss
+| unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss<br />`timehm` to display the number in hh:mm
 
 #### Advanced Config for climate/fan etc
 
