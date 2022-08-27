@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 3.13');
+console.info('NUMBERBOX_CARD 3.14');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -146,10 +146,13 @@ timeNum(x,s,m){
 	return Number(x);
 }
 
-numTime(x,f,t){
+numTime(x,f,t,u){
+	if(t=="timehm"){u=1;f=1;}
 	t = (x>=3600 || f)? Math.floor(x/3600).toString().padStart(2,'0') + ':' : '';
 	t += (Math.floor(x/60)-Math.floor(x/3600)*60).toString().padStart(2,'0');
-	t += ':' + (x%60).toString().padStart(2,'0');
+	if( !u ){
+		t += ':' + (x%60).toString().padStart(2,'0');
+	}
 	return t;
 }
 
@@ -195,8 +198,8 @@ niceNum(){
 	}else{ stp=fix; }
 	fix = v.toFixed(fix);
 	const u=this.config.unit;
-	if( u=="time" ){
-		let t = this.numTime(fix);
+	if( u=="time" || u=="timehm"){
+		let t = this.numTime(fix,0,u);
 		return html`${t}`;
 	}
 	fix = new Intl.NumberFormat(
