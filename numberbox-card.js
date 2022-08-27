@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 3.14');
+console.info('NUMBERBOX_CARD 3.15');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -40,6 +40,9 @@ render() {
 				<state-badge
 				.overrideIcon="${this.config.icon}"
 				.stateObj=${this.stateObj}
+				></state-badge>` : this.config.picture ? html`
+				<state-badge
+				.overrideImage="${this.config.picture}"
 				></state-badge>` : null }
 			<div class="info">
 				${this.config.name?this.config.name:''}
