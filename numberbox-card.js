@@ -154,7 +154,7 @@ numTime(x,f,t,u){
 	t = (x>=3600 || f)? Math.floor(x/3600).toString().padStart(2,'0') + ':' : '';
 	t += (Math.floor(x/60)-Math.floor(x/3600)*60).toString().padStart(2,'0');
 	if( !u ){
-		t += ':' + (x%60).toString().padStart(2,'0');
+		t += ':' + Math.floor(x%60).toString().padStart(2,'0');
 	}
 	return t;
 }
