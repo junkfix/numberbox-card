@@ -22,6 +22,9 @@ render() {
 	if( this.config.icon === undefined && this.stateObj.attributes.icon ){
 		this.config.icon=this.stateObj.attributes.icon;
 	}
+	if( this.config.picture === undefined && this.stateObj.attributes.entity_picture ){
+		this.config.picture=this.stateObj.attributes.entity_picture;
+	}
 	if( this.config.unit === undefined && this.stateObj.attributes.unit_of_measurement ){
 		this.config.unit=this.stateObj.attributes.unit_of_measurement;
 	}
