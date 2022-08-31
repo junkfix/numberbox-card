@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 3.16');
+console.info('NUMBERBOX_CARD 3.17');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -37,7 +37,7 @@ render() {
 
 	return html`
 	<ha-card class="${(!this.config.border)?'noborder':''}">
-		${(this.config.icon || this.config.name) ? html`<div class="grid">
+		${(this.config.icon || this.config.picture || this.config.name) ? html`<div class="grid">
 		<div class="grid-content grid-left" @click="${() => this.moreInfo()}">
 			${this.config.picture ? html`
 				<state-badge
