@@ -35,7 +35,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | entity | string | **Required** | `input_number.my_slider` or `number.my_number`
 | name | string/bool | `friendly_name` | Override friendly name (set to `false` to hide)
 | icon | string/bool | `icon` | Override icon (set to `false` to hide)
-| picture | string | | picture as icon eg. `/local/picture.png` local is www folder
+| picture | string/bool | `entity_picture` | picture as icon eg. `/local/picture.png` local is www folder (set to `false` to hide)
 | border | bool | `false` | set to `true` to show borders
 | icon_plus | string | `mdi:plus` | custom icon
 | icon_minus | string | `mdi:minus` | custom icon
