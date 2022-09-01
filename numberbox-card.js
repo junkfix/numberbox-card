@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 3.17');
+console.info('NUMBERBOX_CARD 4.0');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -354,7 +354,6 @@ static getStubConfig() {
 } customElements.define('numberbox-card', NumberBox);
 
 //Editor
-const includeDomains = ['input_number','number'];
 const fireEvent = (node, type, detail = {}, options = {}) => {
 	const event = new Event(type, {
 		bubbles: options.bubbles === undefined ? true : options.bubbles,
@@ -368,6 +367,21 @@ const fireEvent = (node, type, detail = {}, options = {}) => {
 
 class NumberBoxEditor extends LitElement {
 
+async Pick(){
+	const c="ha-entity-picker";
+	if(!customElements.get(c)){
+		const r = "partial-panel-resolver";
+		await customElements.whenDefined(r);
+		const p = document.createElement(r);
+		p.hass = {panels: [{url_path: "tmp", component_name: "config"}]};
+		p._updateRoutes();
+		await p.routerOptions.routes.tmp.load();
+		const d=document.createElement("ha-panel-config");
+		await d.routerOptions.routes.automation.load();
+	}
+	const a=document.createElement(c);
+	this.render();
+}
 static get properties() {
 	return { hass: {}, config: {} };
 }
@@ -393,6 +407,7 @@ get _border() {
 }
 setConfig(config) {
 	this.config = config;
+	this.Pick();
 }
 
 render() {
@@ -404,7 +419,7 @@ render() {
 		.hass=${this.hass}
 		.value="${this.config.entity}"
 		.configValue=${'entity'}
-		.includeDomains=${includeDomains}
+		.includeDomains=${['input_number','number']}
 		@change="${this.updVal}"
 		allow-custom-entity
 	></ha-entity-picker>
@@ -439,6 +454,13 @@ render() {
 	></ha-icon-picker>
 </div>
 <div class="side">
+	<paper-input
+		label="Picture url(Optional, false to hide)"
+		.value="${this.config.picture}"
+		.configValue="${'picture'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+</div><div class="side">
 	<ha-icon-picker
 		label="Icon Plus [mdi:plus]"
 		.value="${this.config.icon_plus}"
@@ -480,6 +502,66 @@ render() {
 		@value-changed=${this.updVal}
 	></paper-input>
 </div>
+<div><b>Advanced Config</b> <a target="_blank" href="https://github.com/htmltiger/numberbox-card#configuration">more info</a></div>
+<div class="side">
+	<paper-input
+		label="min"
+		.value="${this.config.min}"
+		.configValue="${'min'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+	<paper-input
+		label="max"
+		.value="${this.config.max}"
+		.configValue="${'max'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+	<paper-input
+		label="step"
+		.value="${this.config.step}"
+		.configValue="${'step'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+</div>
+<div class="side">
+	<ha-entity-picker
+		label="step_entity"
+		.hass=${this.hass}
+		.value="${this.config.step_entity}"
+		.configValue=${'step_entity'}
+		@change="${this.updVal}"
+		allow-custom-entity
+	></ha-entity-picker>
+	<ha-entity-picker
+		label="moreinfo"
+		.hass=${this.hass}
+		.value="${this.config.moreinfo}"
+		.configValue=${'moreinfo'}
+		@change="${this.updVal}"
+		allow-custom-entity
+	></ha-entity-picker>
+</div>
+<div class="side">
+	<paper-input
+		label="service"
+		.value="${this.config.service}"
+		.configValue="${'service'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+	<paper-input
+		label="param"
+		.value="${this.config.param}"
+		.configValue="${'param'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+	<paper-input
+		label="state"
+		.value="${this.config.state}"
+		.configValue="${'state'}"
+		@value-changed="${this.updVal}"
+	></paper-input>
+</div>
+
 `;
 }
 
