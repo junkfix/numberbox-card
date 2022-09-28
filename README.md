@@ -39,7 +39,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | border | bool | `false` | set to `true` to show borders
 | icon_plus | string | `mdi:plus` | custom icon
 | icon_minus | string | `mdi:minus` | custom icon
-| initial | string | `?` | initial value when `unknown` or `unavailable` state
+| initial | number | `?` | initial value when `unknown` or `unavailable` state
 | delay | string | `1000` | delay after pressing in ms, `0` to disable
 | speed | string | `0` | long press speed in ms, `0` to disable
 | secondary_info | string |  | `last-changed` `last-updated` or any text/html,<br />you can also display states or other attributes of any entity for eg. <br /> `Light is %light.office_1:state` <br />`Room temp is %climate.heating:attributes:current_temperature`
