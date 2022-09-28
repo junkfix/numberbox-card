@@ -197,6 +197,7 @@ niceNum(){
 		v=this.timeNum(v);
 		if(isNaN(v) && this.config.initial !== undefined){
 			v=Number(this.config.initial);
+			if(isNaN(v)){return this.config.initial;}
 		}
 	}	
 	let stp=Number(this.config.step) || 1;
@@ -209,6 +210,7 @@ niceNum(){
 		let t = this.numTime(fix,0,u);
 		return html`${t}`;
 	}
+	if(isNaN(Number(fix))){return fix;}
 	fix = new Intl.NumberFormat(
 			this._hass.language,
 			{maximumFractionDigits: stp, minimumFractionDigits: stp}
@@ -480,6 +482,8 @@ render() {
 		.value="${(this.config.initial!==undefined)?this.config.initial:''}"
 		.configValue=${'initial'}
 		@input=${this.updVal}
+		type="number"
+		step="any"
 	></ha-textfield>
 	<ha-textfield
 		label="Unit (false to hide)"
