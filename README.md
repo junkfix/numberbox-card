@@ -162,6 +162,7 @@ entities:
       .cur-unit{color:orange; font-size:100% !important; opacity:1 !important}
       .grid-left{color:red}
       .grid-right{color:blue}
+      .cur-box ha-icon{transform:scale(2)}
 
 style: |
   #states{padding:8px 10px !important}
