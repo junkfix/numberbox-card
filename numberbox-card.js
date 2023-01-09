@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 4.1');
+console.info('NUMBERBOX_CARD 4.2');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -211,10 +211,10 @@ niceNum(){
 		return html`${t}`;
 	}
 	if(isNaN(Number(fix))){return fix;}
-	fix = new Intl.NumberFormat(
-			this._hass.language,
-			{maximumFractionDigits: stp, minimumFractionDigits: stp}
-		).format(Number(fix));
+	const lang={auto:this._hass.language, comma_decimal:['en-US','en'], decimal_comma:['de','es','it'], space_comma:['fr','sv','cs'], system:undefined};
+	let g=this._hass.locale.number_format || 'auto';
+	g=lang.hasOwnProperty(g)? lang[g] : lang.auto;
+	fix = new Intl.NumberFormat(g, {maximumFractionDigits: stp, minimumFractionDigits: stp}).format(Number(fix));
 	return u===false ? fix: html`${fix}<span class="cur-unit">${u}</span>`;
 }
 
