@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 4.3');
+console.info('NUMBERBOX_CARD 4.4');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -168,7 +168,7 @@ setNumb(c){
 	if( v===false ){ v=this.timeNum(this.state); v=isNaN(v)?this.config.min:v;}
 	let adval=c?(v + Number(this.config.step)):(v - Number(this.config.step));
 	adval=Math.round(adval*1e9)/1e9;
-	if( adval <= Number(this.config.max) && adval >= Number(this.config.min)){
+	if(adval!=this.state && adval <= Number(this.config.max) && adval >= Number(this.config.min)){
 		this.pending=(adval);
 		if(this.config.delay){
 			clearTimeout(this.bounce);
@@ -176,16 +176,18 @@ setNumb(c){
 		}else{
 			this.publishNum(this);
 		}
+	}else{
+		clearTimeout(this.bounce);this.pending=false;
 	}
 }
 
 publishNum(dhis){
+	if(dhis.pending===false){return;}
 	const s=dhis.config.service.split('.');
 	if(s[0]=='input_datetime'){dhis.pending=dhis.numTime(dhis.pending,1);}
 	const v={entity_id: dhis.config.entity, [dhis.config.param]: dhis.pending};
 	dhis.pending=false;
 	dhis.old.state=dhis.state;
-							  
 	dhis._hass.callService(s[0], s[1], v);
 }
 
