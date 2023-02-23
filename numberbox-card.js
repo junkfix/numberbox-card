@@ -22,7 +22,6 @@ render() {
 		if( this.config[n] === undefined && this.stateObj.attributes[k[n]] ){
 			this.config[n]=this.stateObj.attributes[k[n]];
 		}
-		
 	}
 	
 	const d={min:0,max:9e9,step:1};
