@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 4.5');
+console.info('NUMBERBOX_CARD 4.6');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -16,18 +16,15 @@ constructor() {
 
 render() {
 	if(!this.stateObj){return html`<ha-card>Missing:'${this.config.entity}'</ha-card>`;}
-	if( this.config.name === undefined && this.stateObj.attributes.friendly_name ){
-		this.config.name=this.stateObj.attributes.friendly_name;
+	
+	const k={name:'friendly_name',icon:'icon',picture:'entity_picture',unit:'unit_of_measurement'};
+	for(const n of Object.keys(k)) {
+		if( this.config[n] === undefined && this.stateObj.attributes[k[n]] ){
+			this.config[n]=this.stateObj.attributes[k[n]];
+		}
+		
 	}
-	if( this.config.icon === undefined && this.stateObj.attributes.icon ){
-		this.config.icon=this.stateObj.attributes.icon;
-	}
-	if( this.config.picture === undefined && this.stateObj.attributes.entity_picture ){
-		this.config.picture=this.stateObj.attributes.entity_picture;
-	}
-	if( this.config.unit === undefined && this.stateObj.attributes.unit_of_measurement ){
-		this.config.unit=this.stateObj.attributes.unit_of_measurement;
-	}
+	
 	const d={min:0,max:9e9,step:1};
 	for(const j of Object.keys(d)) {
 		const b=j+'_entity';
