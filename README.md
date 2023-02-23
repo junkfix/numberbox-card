@@ -54,6 +54,8 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | min | number | attribute `min` |  
 | max | number | attribute `max`  |  
 | step | number | attribute `step`  |  
+| min_entity | string | | eg `sensor.my_min_size`  |  
+| max_entity | string | | eg `sensor.my_max_size`  |  
 | step_entity | string | | eg `sensor.my_step_size`  |  
 | param | string | `value` |  service parameter
 | service | string | `input_number.set_value` |  service name
