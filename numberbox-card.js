@@ -544,6 +544,24 @@ render() {
 </div>
 <div class="side">
 	<ha-entity-picker
+		label="min_entity"
+		.hass=${this.hass}
+		.value="${this.config.min_entity}"
+		.configValue=${'min_entity'}
+		@change="${this.updVal}"
+		allow-custom-entity
+	></ha-entity-picker>
+	<ha-entity-picker
+		label="max_entity"
+		.hass=${this.hass}
+		.value="${this.config.max_entity}"
+		.configValue=${'max_entity'}
+		@change="${this.updVal}"
+		allow-custom-entity
+	></ha-entity-picker>
+</div>
+<div class="side">
+	<ha-entity-picker
 		label="step_entity"
 		.hass=${this.hass}
 		.value="${this.config.step_entity}"
