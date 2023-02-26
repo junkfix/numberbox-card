@@ -56,7 +56,8 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | step | number | attribute `step`  |  
 | min_entity | string | | eg `sensor.my_min_size`  |  
 | max_entity | string | | eg `sensor.my_max_size`  |  
-| step_entity | string | | eg `sensor.my_step_size`  |  
+| step_entity | string | | eg `sensor.my_step_size`  |
+| toggle_entity | string | | eg `switch.heating` to display a toggle switch |
 | param | string | `value` |  service parameter
 | service | string | `input_number.set_value` |  service name
 | moreinfo | string | entity | More info click entity, `false` to disable  |  
@@ -125,6 +126,7 @@ entities:
     min: 0
     max: 30
     step: 0.5
+    toggle_entity: switch.downstairs_heater
     secondary_info: >
       Mode:<b style="color:red"> %climate.downstairs_heating:attributes:hvac_action </b><br />
       Current temp:<b style="color:green"> %climate.downstairs_heating:attributes:current_temperature </b>
