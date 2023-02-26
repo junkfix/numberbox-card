@@ -55,7 +55,7 @@ render() {
 				${this.secondaryInfo()}
 			</div>
 		</div><div class="grid-content grid-right">${this.renderNum()}</div>
-		${this.config.toggle ? html`<div class="grid-content"><ha-entity-toggle .stateObj="${this.config.toggle}"
+		${this.config.toggle ? html`<div class="grid-content grid-right"><ha-entity-toggle .stateObj="${this.config.toggle}"
 		.hass="${this._hass}"></ha-entity-toggle></div>` : null }
 		</div>` : this.renderNum() }
 	</ha-card>
