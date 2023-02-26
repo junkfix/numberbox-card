@@ -23,20 +23,24 @@ render() {
 			this.config[n]=this.stateObj.attributes[k[n]];
 		}
 	}
-	
-	const d={min:0,max:9e9,step:1};
+
+	const d={min:0,max:9e9,step:1,toggle:null};
 	for(const j of Object.keys(d)) {
 		const b=j+'_entity';
-		if(b in this.config && this.config[b] in this._hass.states && !isNaN(parseFloat(this._hass.states[this.config[b]].state))) {
-			const c=this._hass.states[this.config[b]]; this.config[j]=c.state; this.old.t[this.config[b]]=c.last_updated
-		}		
-		if(this.config[j] === undefined){ this.config[j]=this.stateObj.attributes[j];}
-		if(isNaN(parseFloat(this.config[j]))){this.config[j]=d[j];}
+		if(b in this.config && this.config[b] in this._hass.states ) {
+			const c=this._hass.states[this.config[b]]; this.old.t[this.config[b]]=c.last_updated
+			if( d[j]!==null && !isNaN(parseFloat(c.state)) ){this.config[j]=c.state;}
+			if(j=='toggle'){this.config[j]=c;}
+		}
+		if(d[j]!==null){
+			if(this.config[j] === undefined){ this.config[j]=this.stateObj.attributes[j];}
+			if(isNaN(parseFloat(this.config[j]))){this.config[j]=d[j];}
+		}
 	}
 
 	return html`
 	<ha-card class="${(!this.config.border)?'noborder':''}">
-		${(this.config.icon || this.config.picture || this.config.name) ? html`<div class="grid">
+		${(this.config.icon || this.config.picture || this.config.name) ? html`<div class="${this.config.toggle?'gridt':'grid'}">
 		<div class="grid-content grid-left" @click="${() => this.moreInfo()}">
 			${this.config.picture ? html`
 				<state-badge
@@ -50,7 +54,10 @@ render() {
 				${this.config.name?this.config.name:''}
 				${this.secondaryInfo()}
 			</div>
-		</div><div class="grid-content grid-right">${this.renderNum()}</div></div>` : this.renderNum() }
+		</div><div class="grid-content grid-right">${this.renderNum()}</div>
+		${this.config.toggle ? html`<div class="grid-content"><ha-entity-toggle .stateObj="${this.config.toggle}"
+		.hass="${this._hass}"></ha-entity-toggle></div>` : null }
+		</div>` : this.renderNum() }
 	</ha-card>
 `;
 }
@@ -271,6 +278,10 @@ static get styles() {
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(2, auto);
+	}
+	.gridt {
+		display: grid;
+		grid-template-columns: repeat(3, auto);
 	}
 	.grid-content {
 		display: grid; align-items: center;
@@ -565,6 +576,16 @@ render() {
 		@change="${this.updVal}"
 		allow-custom-entity
 	></ha-entity-picker>
+	<ha-entity-picker
+		label="toggle_entity"
+		.hass=${this.hass}
+		.value="${this.config.toggle_entity}"
+		.configValue=${'toggle_entity'}
+		@change="${this.updVal}"
+		allow-custom-entity
+	></ha-entity-picker>
+</div>
+<div class="side">
 	<ha-entity-picker
 		label="moreinfo"
 		.hass=${this.hass}
