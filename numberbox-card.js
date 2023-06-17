@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 4.9');
+console.info('NUMBERBOX_CARD_MODIFIED 4.9.1');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -168,10 +168,7 @@ numTime(x,f,t,u){
 	}
 	return t;
 }
-
-numPercentage(x) {
-}
-
+	
 setNumb(c){
 	let v=this.pending;
 	if( v===false ){ v=this.timeNum(this.state); v=isNaN(v)?this.config.min:v;}
@@ -226,12 +223,14 @@ niceNum(){
 	
 	if(isNaN(Number(fix))){return fix;}
 
+	/* MODFIED */
 	const m=this.config.multiply;
 	if(!isNaN(m))
 	{
 		fix=fix*m;
 		stp=stp*m;
 	}
+	/* /MODIFIED */
 	
 	const lang={language:this._hass.language, comma_decimal:['en-US','en'], decimal_comma:['de','es','it'], space_comma:['fr','sv','cs'], system:undefined};
 	let g=this._hass.locale.number_format || 'language';
