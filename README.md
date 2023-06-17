@@ -1,4 +1,4 @@
-# numberbox-card
+# numberbox-card modified
 
 NumberBox for input sliders and number entities
 
@@ -56,7 +56,8 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | max | number | attribute `max`  |  
 | step | number | attribute `step`  |  
 | min_entity | string | | eg `sensor.my_min_size`  |  
-| max_entity | string | | eg `sensor.my_max_size`  |  
+| max_entity | string | | eg `sensor.my_max_size`  |
+| multiply | string | | eg 100 to display fractional value as percentage |
 | step_entity | string | | eg `sensor.my_step_size`  |
 | toggle_entity | string | | eg `switch.heating` to display a toggle switch |
 | param | string | `value` |  service parameter
