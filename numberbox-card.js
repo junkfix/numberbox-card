@@ -77,9 +77,9 @@ secondaryInfo(){
 	if(lu.indexOf(s)>-1){
 		s='%'+this.config.entity+':'+(s.replace('-','_'));
 	}
-	let r;
+	let r=[];
 	if(s.indexOf('%')> -1){
-		r=[]; ret='';
+		ret='';
 		const j=s.split(' ');
 		while(j.length){
 			let t=j.shift();
@@ -107,7 +107,7 @@ secondaryInfo(){
 						}
 					}
 				}
-				ret += ((typeof b !== 'object' )? b : t );
+				ret += (typeof b !== 'object')? b : t;
 			}else{
 				ret += t;
 			}
@@ -510,14 +510,14 @@ render() {
 	></ha-textfield>
 </div><div class="side">
 	<ha-icon-picker
-		label="Icon Plus [mdi:plus]"
-		.value="${this.config.icon_plus}"
+		label="Icon Plus"
+		.value="${(this.config.icon_plus)?this.config.icon_plus:'mdi:plus'}"
 		.configValue=${'icon_plus'}
 		@value-changed=${this.updVal}
 	></ha-icon-picker>
 	<ha-icon-picker
-		label="Icon Minus [mdi:minus]"
-		.value="${this.config.icon_minus}"
+		label="Icon Minus"
+		.value="${(this.config.icon_minus)?this.config.icon_minus:'mdi:minus'}"
 		.configValue=${'icon_minus'}
 		@value-changed=${this.updVal}
 	></ha-icon-picker>
@@ -525,7 +525,7 @@ render() {
 <div class="side">
 	<ha-textfield
 		label="Initial [?]"
-		.value="${(this.config.initial!==undefined)?this.config.initial:''}"
+		.value="${(this.config.initial!==undefined)?this.config.initial:'?'}"
 		.configValue=${'initial'}
 		@input=${this.updVal}
 		type="number"
@@ -540,15 +540,15 @@ render() {
 </div>
 <div class="side">
 	<ha-textfield
-		label="Update Delay [1000] ms"
-		.value="${(this.config.delay!==undefined)?this.config.delay:''}"
+		label="Update Delay (ms)"
+		.value="${(this.config.delay!==undefined)?this.config.delay:'1000'}"
 		.configValue=${'delay'}
 		@input=${this.updVal}
 		type="number"
 	></ha-textfield>
 	<ha-textfield
-		label="Long press Speed [0] ms"
-		.value="${(this.config.speed!==undefined)?this.config.speed:''}"
+		label="Long press Speed (ms)"
+		.value="${(this.config.speed!==undefined)?this.config.speed:'0'}"
 		.configValue=${'speed'}
 		@input=${this.updVal}
 		type="number"
