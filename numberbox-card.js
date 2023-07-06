@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 4.10');
+console.info('NUMBERBOX_CARD 4.11');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -69,41 +69,57 @@ updated(x) {
 	}
 }
 
-
 secondaryInfo(){
-	const s=this.config.secondary_info;
+	let s=this.config.secondary_info;
 	if(!s){return;}
-	let r=s;
-	let h=s;
+	const lu='last_updated last_changed last-updated last-changed'.split(' ');
+	let ret=s;
+	if(lu.indexOf(s)>-1){
+		s='%'+this.config.entity+':'+(s.replace('-','_'));
+	}
+	let r;
 	if(s.indexOf('%')> -1){
+		r=[]; ret='';
 		const j=s.split(' ');
-		for (let i in j) {
-			if(j[i][0]=='%'){
-				j[i]=j[i].substring(1).split(':');
+		while(j.length){
+			let t=j.shift();
+			if(t[0]=='%'){
+				t=t.substring(1).split(':');
 				let b=this._hass.states;
-				for (let d=0; d<j[i].length; d++){
-					if(b.hasOwnProperty(j[i][d])){
-						b=b[ j[i][d] ];
+				for (let d=0; d<t.length; d++){
+					if(lu.indexOf(t[d])>1){t[d]=t[d].replace('-','_');}
+					const id = t[d];
+					if(b.hasOwnProperty(id)){
+						b=b[id];
 						if(!d){
-							this.old.t[ j[i][d] ]=b.last_updated;
+							this.old.t[id]=b.last_updated;
+						}
+						if(lu.indexOf(id)> -1){
+							if(ret){
+								const div = document.createElement('div');
+								div.innerHTML=ret+' ';
+								r.push(html`${div}`);
+								ret = '';
+							}
+							r.push(html`<ha-relative-time .datetime=${new Date(b)} .hass=${this._hass} ></ha-relative-time> `);
+							b='';
+							break;
 						}
 					}
 				}
-				if( b !== Object(b) ){ j[i]=b;}
+				ret += ((typeof b !== 'object' )? b : t );
+			}else{
+				ret += t;
 			}
-		}
-		r = j.join(' ');
-		
-	}else{
-		const v=s.replace('-','_');
-		if(this.stateObj[v]){
-			h='';
-			r=html`<ha-relative-time .datetime=${new Date(this.stateObj[v])}
-						.hass=${this._hass} ></ha-relative-time>`;
+			ret += ' ';
 		}
 	}
-	if(h){h=r; r='';}
-	this.old.h=h;
+	ret=ret.trim();
+	if(ret){
+		const d2=document.createElement('div');
+		d2.innerHTML=ret;
+		r.push(html`${d2}`);
+	}
 	return html`<div class="secondary">${r}</div>`;
 }
 
