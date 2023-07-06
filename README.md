@@ -43,7 +43,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | delay | number | `1000` | delay after pressing in ms, `0` to disable
 | speed | number | `0` | long press speed in ms, `0` to disable
 | refresh | number | `0` | `1` to disable debounce when change, may fix issues with updating
-| secondary_info | string |  | `last-changed` `last-updated` or any text/html,<br />you can also display states or other attributes of any entity for eg. <br /> `Light is %light.office_1:state` <br />`Room temp is %climate.heating:attributes:current_temperature`
+| secondary_info | string |  | `last_changed` `last_updated` or any text/html,<br />you can also display states or other attributes of any entity for eg. <br /> `Light is %light.office_1:state` <br />`Room temp is %climate.heating:attributes:current_temperature` <br />`%switch.switch_2:last_updated`
 | unit | string/bool  | `unit_of_measurement` | Override unit string (set to `false` to hide) <br />`time` to display the number in hh:mm:ss<br />`timehm` to display the number in hh:mm
 
 #### Advanced Config for climate/fan/input_datetime etc
@@ -131,6 +131,7 @@ entities:
     secondary_info: >
       Mode:<b style="color:red"> %climate.downstairs_heating:attributes:hvac_action </b><br />
       Current temp:<b style="color:green"> %climate.downstairs_heating:attributes:current_temperature </b>
+      %switch.downstairs_power:last_changed
 ```
 
 
