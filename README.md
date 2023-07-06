@@ -131,6 +131,7 @@ entities:
     secondary_info: >
       Mode:<b style="color:red"> %climate.downstairs_heating:attributes:hvac_action </b><br />
       Current temp:<b style="color:green"> %climate.downstairs_heating:attributes:current_temperature </b>
+      %switch.downstairs_power:last_changed
 ```
 
 
