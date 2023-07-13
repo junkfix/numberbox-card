@@ -226,7 +226,7 @@ niceNum(){
 	let fix=0; let v=this.pending;
 	if( v === false ){
 		v=this.state;
-		if(v=='unavailable' || ( v=='unknown' && this.config.initial === undefined ) ){return '?';}
+		if(v=='unavailable' || v === null || ( v=='unknown' && this.config.initial === undefined ) ){return '?';}
 		v=this.timeNum(v);
 		if(isNaN(v) && this.config.initial !== undefined){
 			v=Number(this.config.initial);
