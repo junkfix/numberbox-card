@@ -1,6 +1,6 @@
 ((LitElement) => {
 
-console.info('NUMBERBOX_CARD 4.12');
+console.info('NUMBERBOX_CARD 4.13');
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 class NumberBox extends LitElement {
@@ -90,7 +90,14 @@ secondaryInfo(){
 				for (let d=0; d<t.length; d++){
 					if(lu.indexOf(t[d])>1){t[d]=t[d].replace('-','_');}
 					const id = t[d];
-					if(id[0]=='~'){f=Number(id.substring(1));break;}
+					if(id[0]=='~'){
+						f=Number(id.substring(1));
+						if(!isNaN(f)){
+							let g=parseFloat(b);
+							if(isNaN(g)){f=NaN;}else{b=g;}
+						}
+						break;
+					}
 					if(b.hasOwnProperty(id)){
 						b=b[id];
 						if(!d){
