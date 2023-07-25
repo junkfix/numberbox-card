@@ -61,6 +61,7 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | toggle_entity | string | | eg `switch.heating` to display a toggle switch |
 | param | string | `value` |  service parameter
 | service | string | `input_number.set_value` |  service name
+| service_params | object | `{entity_id: entity, [service parameter]: changedvalue}` |  additional service params
 | moreinfo | string | entity | More info entity eg `sensor.my_max_size`, to navigate eg `/lovelace/mytab`,  `false` to disable  |  
 
 ```
@@ -72,6 +73,9 @@ entities:
     state: temperature
     service: climate.set_temperature
     param: temperature
+    service_params:
+      entity_id: climate.heating
+      hvac_mode: heat
     min: 0
     max: 30
     step: 0.5
