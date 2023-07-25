@@ -59,9 +59,9 @@ or added by clicking the "Add to lovelace" button on the HACS dashboard after in
 | max_entity | string | | eg `sensor.my_max_size`  |  
 | step_entity | string | | eg `sensor.my_step_size`  |
 | toggle_entity | string | | eg `switch.heating` to display a toggle switch |
-| param | string | `value` |  service parameter
 | service | string | `input_number.set_value` |  service name
-| service_params | object | `{entity_id: entity, [service parameter]: changedvalue}` |  additional service params
+| param | string | `value` |  service parameter
+| service_params | object | `{entity_id: entity, [param]: changedvalue}` |  additional service params
 | moreinfo | string | entity | More info entity eg `sensor.my_max_size`, to navigate eg `/lovelace/mytab`,  `false` to disable  |  
 
 ```
