@@ -11,7 +11,7 @@ constructor() {
 	this.pending = false;
 	this.rolling = false;
 	this.state = 0;
-	this.old = {state: undefined, t:{}, h:''};
+	this.old = {state: NaN, t:{}, h:''};
 }
 
 render() {
