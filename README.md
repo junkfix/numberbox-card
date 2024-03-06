@@ -166,16 +166,17 @@ entities:
     type: 'custom:numberbox-card'
     icon_plus: 'mdi:chevron-up'
     icon_minus: 'mdi:chevron-down'
-    style: |
-      .cur-num{font-size:25px !important}
-      .cur-num.upd{color:green}
-      .cur-unit{color:orange; font-size:100% !important; opacity:1 !important}
-      .grid-left{color:red}
-      .grid-right{color:blue}
-      .cur-box ha-icon{transform:scale(2)}
-
-style: |
-  #states{padding:8px 10px !important}
+    card_mod:
+      style: |
+        .cur-num{font-size:25px !important}
+        .cur-num.upd{color:green}
+        .cur-unit{color:orange; font-size:100% !important; opacity:1 !important}
+        .grid-left{color:red}
+        .grid-right{color:blue}
+        .cur-box ha-icon{transform:scale(2)}
+card_mod:
+  style: |
+    #states{padding:8px 10px !important}
 ```
 ![numberbox-card](https://github.com/htmltiger/numberbox-card/raw/main/example2.png)
 ```yaml
@@ -200,17 +201,19 @@ cards:
     border: true
     entity: number.office_temp
     name: false
-    style: >
-      .body{display:block!important}
-      .body::after{text-align:center;font-size:10px;content:"Temperature";display:block!important}
+    card_mod:
+        style: >
+          .body{display:block!important}
+          .body::after{text-align:center;font-size:10px;content:"Temperature";display:block!important}
   - type: custom:numberbox-card
     border: true
     entity: number.office_timer
     unit: time
     name: false
-    style: >
-      .body{display:block!important}
-      .body::after{text-align:center;font-size:10px;content:"Minutes";display:block!important}
+    card_mod:
+        style: >
+          .body{display:block!important}
+          .body::after{text-align:center;font-size:10px;content:"Minutes";display:block!important}
 ```
 
 
